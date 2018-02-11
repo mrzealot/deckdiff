@@ -1,0 +1,13 @@
+#viewport {
+    width: 600px;
+    overflow-x: auto;
+}
+
+#container {
+    width: 10000px;
+}
+
+.column {
+    float: left;
+    width: 250px;
+}

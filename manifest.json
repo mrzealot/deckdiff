@@ -1,0 +1,10 @@
+{
+  "name": "Deckdiff",
+  "short_name": "Deckdiff",
+  "version": "0.0.1",
+  "description": "Diffing for Hearthstone decks",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_popup": "index.html"
+  }
+}
