@@ -4,7 +4,11 @@ order2dbfId = []
 dbfId2order = {}
 
 function message(msg) {
-    console.log(msg)
+    swal(msg)
+}
+
+function save() {
+    chrome.storage.sync.set({'codes': codes})
 }
 
 function outputCard(deck, match) {
@@ -32,20 +36,69 @@ function outputEmpty(deck) {
     deck.element.append($('<div class="card empty"></div>'))
 }
 
+function addDeck(code) {
+    if (!code) {
+        code = chrome.extension.getBackgroundPage().readClipboard()
+    }
+    if (code) {
+        try {
+            deckstrings.decode(code) // validity check only
+            codes.push(code)
+            save()
+            diff()
+        } catch(ex) {
+            message("You have something other than a deck code on the clipboard...")
+            console.log(ex)
+        }
+    } else {
+        message("Please copy a deck code to the clipboard first!")
+    }
+}
+
+function deckInfo(rawDeck) {
+    var klass = _.capitalize(HSDB[rawDeck.heroes[0]].playerClass)
+    var format = rawDeck.format === 1 ? 'Wild' : 'Standard'
+    var dust = 0
+    var dustTable = {
+        COMMON: 40,
+        RARE: 100,
+        EPIC: 400,
+        LEGENDARY: 1600
+    }
+    rawDeck.cards.forEach(function(card) {
+        dust += (dustTable[HSDB[card[0]].rarity] || 0) * card[1]
+    })
+
+    return {
+        klass: klass,
+        format: format,
+        dust: dust
+    }
+}
+
 function diff() {
 
     // prepare DOM
     $('.column.deck').remove()
     var placeholder = $('.placeholder')
 
+    if (codes.length === 0) return
+
     // convert codes to decks
     var decks = []
     codes.forEach(function(code, index) {
-        var el = $('<div class="column deck"></div>')
-        el.insertBefore(placeholder)
-        el.append($('<div class="closer" data-index="' + index + '">Close</div>'))
-
         var rawDeck = deckstrings.decode(code)
+        var info = deckInfo(rawDeck)
+
+        var el = $('<div class="column deck"></div>')
+        var header = $('<div class="header" data-index="' + index + '"></div>')
+        header.append($('<span class="format">' + info.format + '</span>'))
+        header.append($('<span class="klass">' + info.klass + '</span>'))
+        header.append($('<span class="dust">' + info.dust + '<i class="fas fa-flask"></i></span>'))
+        header.append($('<span class="closer"><i class="fas fa-times"></i></span>'))
+        el.append(header)
+        el.insertBefore(placeholder)
+
         var mappedDeck = _.map(rawDeck.cards, function(card) {
             return [dbfId2order[card[0]], card[1]]
         })
@@ -111,13 +164,9 @@ function diff() {
 $(function(){
 
     // load HS JSON and card order
-    var xhr = new XMLHttpRequest()
-    xhr.open("GET", "https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json", true)
-    xhr.onreadystatechange = function() {
-      if (xhr.readyState == 4) {
+    $.getJSON( 'https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json', function(data) {
         HSDB = {}
-        var resp = JSON.parse(xhr.responseText)
-        resp.forEach(function(card) {
+        data.forEach(function(card) {
             HSDB[card.dbfId] = card
             order2dbfId.push(card.dbfId)
         })
@@ -125,16 +174,9 @@ $(function(){
         order2dbfId.sort(function(aID, bID) {
             a = HSDB[aID]
             b = HSDB[bID]
-
             if (a.cost !== b.cost) return a.cost - b.cost
-
             if (a.name < b.name) return -1
             else if (a.name > b.name) return 1
-
-            if (a.name == "Valeera the Hollow" || a.name == "N'Zoth, the Corruptor") {
-                console.log(a)
-            }
-
             return 0
         })
 
@@ -142,39 +184,38 @@ $(function(){
             dbfId2order[dbfId] = index;
         })
 
+        // clicking the placeholder now adds decks
+        $('.placeholder').addClass('active').on('click', function(){
+            addDeck()
+        })
 
-        // temp
-        codes.push("AAECAaIHBIbCAs/hAtvjAsPqAg3EAZwC7QKfA4gF1AXjBfgHhgn4vQKXwQL8wQLH0wIA")
-        diff()
-
-      }
-    }
-    xhr.send()
-
-    // clicking the placeholder adds decks
-    $('.placeholder').on('click', function() {
-        var code = chrome.extension.getBackgroundPage().readClipboard()
-        if (code) {
-            try {
-                deckstrings.decode(code) // validity check only
-                codes.push(code)
-                if (HSDB) {
-                    diff()
-                }
-            } catch(ex) {
-                message("You have something other than a deck code on the clipboard...")
-                console.log(ex)
-            }
-        } else {
-            message("Please copy a deck code to the clipboard first!")
-        }
+        // load the decks from last time 
+        chrome.storage.sync.get('codes', function(data) {
+            codes = data.codes || []
+            diff()
+        })
     })
 
     // close buttons
     $(document).on('click', '.closer', function() {
-        var index = $(this).data('index')
+        var index = $(this).parent().data('index')
         codes.splice(index, 1)
+        save()
         diff()
     })
 
+    // header buttons
+    $('#clear').on('click', function() {
+        codes = []
+        save()
+        diff()
+    })
+
+    $('#issues').on('click', function() {
+        window.open('http://github.com/mrzealot/deckdiff/issues', '_blank')
+    })
+
+    $('#info').on('click', function() {
+        message('Info...')
+    })
 })

@@ -4,16 +4,24 @@
         <meta charset="utf-8">
         <title>Deckdiff</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="css/style.css">
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
-        <script type="text/javascript" src="deckstrings.js"></script>
-        <script type="text/javascript" src="ui.js"></script>
+        <script type="text/javascript" src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+        <script type="text/javascript" src="js/deckstrings.js"></script>
+        <script type="text/javascript" src="js/ui.js"></script>
     </head>
 
     <body>
         <header>
-            valami
+            <div id="name">DeckDIFF</div>
+            <div id="header-buttons">
+                <span id="info"><i class="far fa-lightbulb"></i></span>
+                <span id="issues"><i class="fas fa-flag"></i></span>
+                <span id="clear"><i class="fas fa-ban"></i></span>
+            </div>
         </header>
         <div id="container">
             <div class="column placeholder">+</div>

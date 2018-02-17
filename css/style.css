@@ -4,7 +4,49 @@ body {
 }
 
 header {
-    height: 40px;
+    height: 35px;
+    line-height: 35px;
+    margin-bottom: 5px;
+    vertical-align: middle;
+}
+
+#name {
+    float: left;
+    font-weight: bold;
+    font-size: 20px;
+    margin-left: 5px;
+}
+
+#header-buttons {
+    float: right;
+    height: 100%;
+}
+
+#header-buttons span {
+    display: block;
+    width: 35px;
+    height: 100%;
+    margin-right: 5px;
+    font-size: 18px;
+    float: left;
+    text-align: center;
+    color: #222;
+    cursor: pointer;
+}
+
+#clear:hover {
+    color: white;
+    background-color: #c9302c;
+}
+
+#issues:hover {
+    color: white;
+    background-color: #ec971f;
+}
+
+#info:hover {
+    color: white;
+    background-color: #0275d8;
 }
 
 #container {
@@ -32,29 +74,69 @@ header {
     opacity: 0.5;
     padding-top: 200px;
     cursor: pointer;
-    margin-top: 21px;
-    min-height: 319px;
-    margin: 21px 5px 0 5px;
+    min-height: 340px;
+    margin: 0 5px;
 }
 
-.column.placeholder:hover {
-    background-color: #E5F3FF;
+.column.placeholder.active:hover {
+    background-color: #ffd3ad;
 }
 
 .column.placeholder:first-child {
     width: 230px;
+    font-size: 100px;
+    padding-top: 170px;
+    min-height: 370px;
 }
 
-.closer {
+.column .header {
     height: 20px;
-    width: 70px;
     font-weight: bold;
-    line-height: 20px;
-    cursor: pointer;
+    background-color: #444;
     margin-bottom: 1px;
+    vertical-align: middle;
+    line-height: 20px;
+    color: white;
+    text-align: left;
 }
 
-.closer:hover {
+.column .header span {
+    display: inline-block;
+}
+
+.column .header .format {
+    width: 65px;
+    text-align: left;
+    padding-left: 5px;
+}
+
+.column .header .klass {
+    width: 80px;
+    text-align: left;
+}
+
+.column .header .dust {
+    width: 60px;
+    text-align: left;
+}
+
+.fa-flask {
+    position: relative;
+    padding-left: 2px;
+    font-size: 0.8em;
+    bottom: 1px;
+}
+
+.column .header .closer {
+    width: 20px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+    float: right;
+    text-align: center;
+}
+
+.column .header .closer:hover {
     color: white;
     background-color: red;
 }
@@ -94,7 +176,7 @@ header {
 }
 
 .card:hover {
-    background-color: #E5F3FF;
+    background-color: #ffd3ad;
 }
 
 .card .mana {
@@ -129,4 +211,8 @@ header {
     font-size: 120%;
     position: relative;
     top: -1px;
+}
+
+.swal-button {
+    background-color: #F07000;
 }

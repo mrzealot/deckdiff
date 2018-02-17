@@ -3,6 +3,9 @@
   "short_name": "Deckdiff",
   "version": "0.0.1",
   "description": "Diffing for Hearthstone decks",
+  "icons": {
+    "128": "img/icon.png"
+  },
   "manifest_version": 2,
   "background": {
     "page": "background.html"
@@ -12,7 +15,8 @@
   },
   "permissions": [
     "clipboardRead",
+    "storage",
     "https://api.hearthstonejson.com/"
   ],
-  "content_security_policy": "script-src 'self' https://cdnjs.cloudflare.com; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://cdnjs.cloudflare.com https://use.fontawesome.com https://unpkg.com; object-src 'self'"
 }
