@@ -219,11 +219,16 @@ $(function(){
     })
 
     $('#issues').on('click', function() {
-        window.open('http://github.com/mrzealot/deckdiff/issues', '_blank')
+        chrome.tabs.create({'url': 'http://github.com/mrzealot/deckdiff/issues'})
     })
 
     $('#info').on('click', function() {
         message('This extension helps you compare different versions of Hearthstone decks.\n' +
             'Just copy a deckcode to your clipboard and press the huge plus sign to add a deck...')
     })
+
+    $('#maximize').on('click', function() {
+        chrome.tabs.create({'url': chrome.extension.getURL('ui.html') + '?maximized=true'})
+    })
+
 })
