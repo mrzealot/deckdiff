@@ -228,7 +228,20 @@ $(function(){
     })
 
     $('#maximize').on('click', function() {
-        chrome.tabs.create({'url': chrome.extension.getURL('ui.html') + '?maximized=true'})
+        chrome.tabs.create({'url': chrome.extension.getURL('ui.html') + '?maximized'})
     })
 
+    // handle stretching if it's opened in a new tab
+    if (window.location.href.indexOf('maximized') !== -1) {
+        var size = function() {
+            return $(window).height() - $('header').outerHeight(true)
+        }
+        $('#maximize').hide()
+        $('#container')
+        .css('max-width', 'initial')
+        .css('max-height', size())
+        $(window).on('resize', function() {
+            $('#container').css('max-height', size())
+        })
+    }
 })
