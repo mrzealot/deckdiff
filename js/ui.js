@@ -11,6 +11,12 @@ function save() {
     chrome.storage.sync.set({'codes': codes})
 }
 
+function cleanup(code) {
+    return code.split('\n').filter(function(line) {
+        return !line.startsWith('#')
+    }).join('\n')
+}
+
 function outputCard(deck, match) {
     var order = deck.deck[deck.cardIndex][0]
     var num = deck.deck[deck.cardIndex][1]
@@ -42,6 +48,7 @@ function addDeck(code) {
     }
     if (code) {
         try {
+            code = cleanup(code) // remove possible comments
             deckstrings.decode(code) // validity check only
             codes.push(code)
             save()
