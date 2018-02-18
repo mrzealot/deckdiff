@@ -216,6 +216,7 @@ $(function(){
     })
 
     $('#info').on('click', function() {
-        message('Info...')
+        message('This extension helps you compare different versions of Hearthstone decks.\n' +
+            'Just copy a deckcode to your clipboard and press the huge plus sign to add a deck...')
     })
 })
