@@ -62,31 +62,45 @@ header {
     display: inline-block;
     width: 230px;
     min-height: 540px;
-    vertical-align: top;
     padding: 0 5px;
+    vertical-align: top;
 }
 
 .column.placeholder {
+    padding: 0;
     width: 40px;
     background-color: #E1D7BD;
-    font-size: 40px;
+    font-size: 22px;
     font-weight: bold;
     opacity: 0.5;
-    padding-top: 200px;
     cursor: pointer;
-    min-height: 340px;
     margin: 0 5px;
-}
-
-.column.placeholder.active:hover {
-    background-color: #ffd3ad;
+    height: 550px;
 }
 
 .column.placeholder:first-child {
-    width: 230px;
-    font-size: 100px;
-    padding-top: 170px;
-    min-height: 370px;
+    width: 240px;
+    font-size: 80px;
+    line-height: 80px;
+}
+
+.column.placeholder .adder {
+    height: 180px;
+    box-sizing: border-box;
+    padding-top: 70px;
+    line-height: 40px;
+}
+
+.column.placeholder:first-child .adder {
+    padding-top: 50px;
+}
+
+.column.placeholder .adder:first-child {
+    height: 190px;
+}
+
+.column.placeholder.active .adder:hover {
+    background-color: #ffd3ad;
 }
 
 .column .header {

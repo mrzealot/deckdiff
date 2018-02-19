@@ -7,6 +7,15 @@ function message(msg) {
     swal(msg)
 }
 
+function ask(question, cb) {
+    swal(question, {
+       content: "input",
+    })
+    .then((value) => {
+        cb(value);
+    });
+}
+
 function save() {
     chrome.storage.sync.set({'codes': codes})
 }
@@ -42,24 +51,53 @@ function outputEmpty(deck) {
     deck.element.append($('<div class="card empty"></div>'))
 }
 
-function addDeck(code) {
-    if (!code) {
-        code = chrome.extension.getBackgroundPage().readClipboard()
+function addCode(code) {
+    try {
+        code = cleanup(code) // remove possible comments
+        deckstrings.decode(code) // validity check only
+        codes.push(code)
+        save()
+        diff()
+    } catch(ex) {
+        message('Mistakes were made... (This is not a valid deckcode)')
+        console.log(ex)
     }
+}
+
+function addDeckFromClipboard() {
+    code = chrome.extension.getBackgroundPage().readClipboard()
     if (code) {
-        try {
-            code = cleanup(code) // remove possible comments
-            deckstrings.decode(code) // validity check only
-            codes.push(code)
-            save()
-            diff()
-        } catch(ex) {
-            message("You have something other than a deck code on the clipboard...")
-            console.log(ex)
-        }
+        addCode(code)
     } else {
-        message("Please copy a deck code to the clipboard first!")
+        message('Please copy a deckcode to the clipboard first!')
     }
+}
+
+function scraper() {
+    var regex = new RegExp('(?:[A-Za-z0-9+/]{4}){10,}(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})', 'g')
+    return document.documentElement.outerHTML.match(regex)
+}
+
+function addDeckFromPage() {
+    var inject = `(${scraper})()`
+    chrome.tabs.executeScript({code: inject}, function(candidates) {
+        var theOne = candidates && candidates[0] && candidates[0].find(function(candidate) {
+            try {
+                deckstrings.decode(candidate);
+                return true
+            } catch (ex) {}
+            return false
+        })
+        if (theOne) {
+            addCode(theOne)
+        } else {
+            message("Sorry, I couldn't find anything deckcode-ish...")
+        }
+    })
+}
+
+function addDeckManually() {
+    ask('Please enter a deckcode:', addCode)
 }
 
 function deckInfo(rawDeck) {
@@ -191,10 +229,11 @@ $(function(){
             dbfId2order[dbfId] = index;
         })
 
-        // clicking the placeholder now adds decks
-        $('.placeholder').addClass('active').on('click', function(){
-            addDeck()
-        })
+        // clicking the placeholder buttons now adds decks
+        $('.placeholder').addClass('active')
+        $('#paste').on('click', function(){ addDeckFromClipboard() })
+        $('#scrape').on('click', function(){ addDeckFromPage() })
+        $('#enter').on('click', function(){ addDeckManually() })
 
         // load the decks from last time 
         chrome.storage.sync.get('codes', function(data) {
