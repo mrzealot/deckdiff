@@ -20,5 +20,10 @@
     "https://api.hearthstonejson.com/",
     "<all_urls>"
   ],
+  "applications": {
+    "gecko": {
+      "id": "deckdiff@zealot.hu"
+    }
+  },
   "content_security_policy": "script-src 'self' https://cdnjs.cloudflare.com https://use.fontawesome.com https://unpkg.com; object-src 'self'"
 }
