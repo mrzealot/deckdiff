@@ -3,6 +3,8 @@ codes = []
 order2dbfId = []
 dbfId2order = {}
 
+var deckcodeRegex = new RegExp('(?:[A-Za-z0-9+/]{4}){10,}(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})', 'g')
+
 function message(msg) {
     swal(msg)
 }
@@ -21,9 +23,8 @@ function save() {
 }
 
 function cleanup(code) {
-    return code.split('\n').filter(function(line) {
-        return !line.startsWith('#')
-    }).join('\n')
+    var match = code.match(deckcodeRegex)
+    return match && match[0]
 }
 
 function outputCard(deck, match) {
