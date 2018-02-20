@@ -48,13 +48,12 @@ function outputCard(deck, match) {
     cardEl.addClass('card')
     cardEl.addClass(rarity)
     if (match) cardEl.addClass('match')
-    cardEl.append($('<span class="mana">&#x2B23;</span>'))
-    cardEl.append($('<span class="cost">' + card.cost + '</span>'))
-    cardEl.append($('<span class="name">' + card.name + '</span>'))
+    cardEl.append($('<div class="cost"><span>' + card.cost + '</span></div>'))
+    cardEl.append($('<div class="name">' + card.name + '</div>'))
     if (rarity === 'legendary') {
-        cardEl.append($('<span class="num star">&starf;</span>'))
+        cardEl.append($('<div class="num star">&starf;</div>'))
     } else {
-        cardEl.append($('<span class="num">' + num + '</span>'))
+        cardEl.append($('<div class="num">' + num + '</div>'))
     }
     deck.element.append(cardEl)
 }
