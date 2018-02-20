@@ -5,12 +5,23 @@ dbfId2order = {}
 
 var deckcodeRegex = new RegExp('(?:[A-Za-z0-9+/]{4}){10,}(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})', 'g')
 
-function message(msg) {
-    swal(msg)
+function message(title, msg, html) {
+    if (html) {
+        swal({
+            content: $(`
+                <div>
+                    <div class="swal-title">${title}</div>
+                    <div class="swal-text">${msg}</div>
+                </div>
+            `)[0]
+        })
+    } else {
+        swal(title, msg)
+    }
 }
 
-function ask(question, cb) {
-    swal(question, {
+function ask(title, question, cb) {
+    swal(title, question, {
        content: "input",
     })
     .then((value) => {
@@ -60,7 +71,7 @@ function addCode(code) {
         save()
         diff()
     } catch(ex) {
-        message('Mistakes were made... (This is not a valid deckcode)')
+        message('Mistakes were made...', 'This is not a valid deckcode!')
         console.log(ex)
     }
 }
@@ -70,7 +81,7 @@ function addDeckFromClipboard() {
     if (code) {
         addCode(code)
     } else {
-        message('Please copy a deckcode to the clipboard first!')
+        message('Mistakes were made...', 'Please copy a deckcode to the clipboard first!')
     }
 }
 
@@ -92,13 +103,13 @@ function addDeckFromPage() {
         if (theOne) {
             addCode(theOne)
         } else {
-            message("Sorry, I couldn't find anything deckcode-ish...")
+            message('Sorry about that...', "I couldn't find anything deckcode-ish.")
         }
     })
 }
 
 function addDeckManually() {
-    ask('Please enter a deckcode:', function(value) {
+    ask('Here we go...', 'Please enter a deckcode:', function(value) {
         if (value) {
             addCode(value)
         }
@@ -267,8 +278,7 @@ $(function(){
     })
 
     $('#info').on('click', function() {
-        message('This extension helps you compare different versions of Hearthstone decks.\n' +
-            'Just copy a deckcode to your clipboard and press the huge plus sign to add a deck...')
+        chrome.tabs.create({'url': 'https://github.com/mrzealot/deckdiff/blob/master/README.md'})
     })
 
     $('#maximize').on('click', function() {
