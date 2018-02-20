@@ -226,6 +226,10 @@ header {
     line-height: 20px;
 }
 
+.card.empty {
+    background-color: transparent;
+}
+
 .card.match {
     opacity: 0.5;
 }
@@ -250,6 +254,10 @@ header {
     background-color: #ffd3ad;
 }
 
+.card.empty:hover {
+    background-color: transparent;
+}
+
 .card div {
     float: left;
 }
@@ -268,7 +276,6 @@ header {
     position: absolute;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    z-index: -1;
 }
 
 .card .cost:before {
@@ -284,6 +291,8 @@ header {
 .card .cost span {
     margin-left: -100%;
     margin-right: -100%;
+    position: relative;
+    z-index: 2;
 }
 
 .card .name {
@@ -306,8 +315,17 @@ header {
     top: -1px;
 }
 
+.card:last-child {
+    margin-bottom: 10px;
+}
+
 .swal-button {
     background-color: #F07000;
+}
+
+.swal-button:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 .swal-text {
