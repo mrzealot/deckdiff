@@ -5,8 +5,14 @@ function readClipboard() {
     clipboard.select();
     if (document.execCommand('paste')) {
         result = clipboard.value;
-        console.log('got value from clipboard: ' + result);
     }
     clipboard.value = '';
     return result;
+}
+
+function writeClipboard(content) {
+    var clipboard = document.getElementById('clipboard');
+    clipboard.value = content;
+    clipboard.select();
+    return document.execCommand('copy')
 }

@@ -118,6 +118,7 @@ function addDeckManually() {
 function deckInfo(rawDeck) {
     var klass = _.capitalize(HSDB[rawDeck.heroes[0]].playerClass)
     var format = rawDeck.format === 1 ? 'Wild' : 'Standard'
+    var formatAbbr = rawDeck.format === 1 ? 'Wld' : 'Std'
     var dust = 0
     var dustTable = {
         COMMON: 40,
@@ -132,6 +133,7 @@ function deckInfo(rawDeck) {
     return {
         klass: klass,
         format: format,
+        formatAbbr: formatAbbr,
         dust: dust
     }
 }
@@ -151,11 +153,12 @@ function diff() {
         var info = deckInfo(rawDeck)
 
         var el = $('<div class="column deck"></div>')
-        var header = $('<div class="header" data-index="' + index + '"></div>')
-        header.append($('<span class="format">' + info.format + '</span>'))
-        header.append($('<span class="klass">' + info.klass + '</span>'))
-        header.append($('<span class="dust">' + info.dust + '<i class="fas fa-flask"></i></span>'))
-        header.append($('<span class="closer"><i class="fas fa-times"></i></span>'))
+        var header = $(`<div class="header" data-index="${index}"></div>`)
+        header.append($(`<span class="format"><span title="${info.format}">${info.formatAbbr}</span><i class="fas fa-angle-right"></i><span>${info.klass}</span></span>`))
+        header.append($(`<span class="dust">${info.dust}<i class="fas fa-flask" title="Dust"></i></span>`))
+        header.append($('<span class="closer" title="Close this deck!"><i class="fas fa-times"></i></span>'))
+        header.append($('<div class="copy-message">Deck copied to clipboard...</div>'))
+        header.append($('<span class="copy" title="Copy deckcode to clipboard!"><span><i class="far fa-copy"></i></span></span>'))
         el.append(header)
         el.insertBefore(placeholder)
 
@@ -263,6 +266,15 @@ $(function(){
         codes.splice(index, 1)
         save()
         diff()
+    })
+
+    // copy buttons
+    $(document).on('click', '.copy', function() {
+        var index = $(this).parent().data('index')
+        var result = chrome.extension.getBackgroundPage().writeClipboard(codes[index])
+        if (result) {
+            $(this).parent().children('.copy-message').fadeIn(100).delay(1000).fadeOut(500)
+        }
     })
 
     // header buttons
