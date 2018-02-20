@@ -1,7 +1,6 @@
 HSDB = null
 codes = []
-order2dbfId = []
-dbfId2order = {}
+order2id = []
 version = 'v0.0.0'
 
 var deckcodeRegex = new RegExp('(?:[A-Za-z0-9+/]{4}){10,}(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})', 'g')
@@ -42,7 +41,7 @@ function cleanup(code) {
 function outputCard(deck, match) {
     var order = deck.deck[deck.cardIndex][0]
     var num = deck.deck[deck.cardIndex][1]
-    var dbfId = order2dbfId[order]
+    var dbfId = order2id[order]
     var card = HSDB[dbfId]
     var cardEl = $('<div></div>')
     var rarity = card.rarity.toLowerCase()
@@ -164,7 +163,7 @@ function diff() {
         el.insertBefore(placeholder)
 
         var mappedDeck = _.map(rawDeck.cards, function(card) {
-            return [dbfId2order[card[0]], card[1]]
+            return [order2id.indexOf(card[0]), card[1]]
         })
         var sortedDeck = _.sortBy(mappedDeck, function(card) {
             return card[0]
@@ -231,21 +230,20 @@ $(function(){
     $.getJSON( 'https://api.hearthstonejson.com/v1/latest/enUS/cards.collectible.json', function(data) {
         HSDB = {}
         data.forEach(function(card) {
+            if (card.cost === undefined) { // giving a fictional negative cost to heroes for correct sorting
+                card.cost = -1;
+            }
             HSDB[card.dbfId] = card
-            order2dbfId.push(card.dbfId)
+            order2id.push(card.dbfId)
         })
 
-        order2dbfId.sort(function(aID, bID) {
-            a = HSDB[aID]
-            b = HSDB[bID]
+        order2id.sort(function(aID, bID) {
+            var a = HSDB[aID]
+            var b = HSDB[bID]
             if (a.cost !== b.cost) return a.cost - b.cost
             if (a.name < b.name) return -1
             else if (a.name > b.name) return 1
             return 0
-        })
-
-        order2dbfId.forEach(function(dbfId, index) {
-            dbfId2order[dbfId] = index;
         })
 
         // clicking the placeholder buttons now adds decks
