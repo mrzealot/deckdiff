@@ -98,7 +98,11 @@ function addDeckFromPage() {
 }
 
 function addDeckManually() {
-    ask('Please enter a deckcode:', addCode)
+    ask('Please enter a deckcode:', function(value) {
+        if (value) {
+            addCode(value)
+        }
+    })
 }
 
 function deckInfo(rawDeck) {
