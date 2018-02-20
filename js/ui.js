@@ -2,6 +2,7 @@ HSDB = null
 codes = []
 order2dbfId = []
 dbfId2order = {}
+version = 'v0.0.0'
 
 var deckcodeRegex = new RegExp('(?:[A-Za-z0-9+/]{4}){10,}(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})', 'g')
 
@@ -257,6 +258,16 @@ $(function(){
         chrome.storage.sync.get('codes', function(data) {
             codes = data.codes || []
             diff()
+        })
+    })
+
+    // load version, just for fun (or debugging)
+    $.getJSON( chrome.extension.getURL('manifest.json'), function(data) {
+        version = 'v' + data.version
+        $('#name').on('click', function() {
+            message('The pleasure is mine', `
+                <p>DeckDIFF ${version}</p><p>coded with <i class="fas fa-heart"></i> by <a class="credit-link" href="https://github.com/mrzealot" target="_blank">MrZealot</a></p>
+            `, true)
         })
     })
 

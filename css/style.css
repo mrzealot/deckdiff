@@ -309,3 +309,16 @@ header {
 .swal-button {
     background-color: #F07000;
 }
+
+.swal-text {
+    text-align: center;
+}
+
+.fa-heart {
+    color: #c9302c;
+}
+
+.credit-link {
+    color: #2C82C9;
+    text-decoration: none;
+}
