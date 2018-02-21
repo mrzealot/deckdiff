@@ -105,7 +105,12 @@ header {
     background-color: #ffd3ad;
 }
 
-.column .header {
+/*
+*   Column Headers
+*/
+
+.column .header,
+.column .subheader {
     height: 20px;
     font-weight: bold;
     background-color: #444;
@@ -118,7 +123,12 @@ header {
     position: relative;
 }
 
-.column .header span {
+.column .subheader {
+    opacity: 0.5;
+}
+
+.column .header span,
+.column .subheader span {
     display: inline-block;
 }
 
@@ -137,7 +147,8 @@ header {
 }
 
 .column .header .copy span:before,
-.column .header .copy span:after {
+.column .header .copy span:after,
+.column .subheader .format:before {
     content: "";
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
@@ -156,6 +167,11 @@ header {
     left: 12px;
 }
 
+.column .subheader .format:before {
+    border-right-color: #444;
+    left: -12px;
+}
+
 .column .header .copy:hover {
     color: #222;
     background-color: #ec971f;
@@ -169,26 +185,12 @@ header {
     border-left-color: #ec971f;
 }
 
-.column .header .format {
-    width: 120px;
-    text-align: left;
+.column .header .deck-name {
+    width: 175px;
+    padding-right: 5px;
     margin-left: 24px;
-}
-
-.column .header .format .fa-angle-right {
-    padding: 0 2px;
-}
-
-.column .header .dust {
-    width: 54px;
-    text-align: left;
-}
-
-.column .header .dust .fa-flask {
-    position: relative;
-    padding-left: 2px;
-    font-size: 9.6px;
-    bottom: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .column .header .closer {
@@ -214,6 +216,34 @@ header {
     background-color: #0FAF03;
     text-align: center;
 }
+
+.column .subheader .format {
+    width: 120px;
+    text-align: left;
+    margin-left: 24px;
+}
+
+.column .subheader .format .fa-angle-right {
+    padding: 0 4px;
+}
+
+.column .subheader .dust {
+    width: 55px;
+    padding-right: 5px;
+    text-align: right;
+}
+
+.column .subheader .dust .fa-flask {
+    position: relative;
+    padding-left: 2px;
+    font-size: 9.6px;
+    bottom: 1px;
+}
+
+
+/*
+*   Cards
+*/
 
 .card {
     height: 20px;
@@ -319,6 +349,10 @@ header {
     margin-bottom: 10px;
 }
 
+/*
+*   Misc
+*/
+
 .swal-button {
     background-color: #F07000;
 }
@@ -330,6 +364,10 @@ header {
 
 .swal-text {
     text-align: center;
+}
+
+.swal-content input {
+    width: 100%;
 }
 
 .fa-heart {
