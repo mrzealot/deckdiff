@@ -2,6 +2,7 @@ HSDB = null
 codes = []
 order2id = []
 version = 'v0.0.0'
+options = defaults = {}
 
 var deckcodeRegex = new RegExp('(?:[A-Za-z0-9+/]{4}){10,}(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})', 'g')
 var decknameRegex = new RegExp('^### (.*)$', 'm')
@@ -49,6 +50,9 @@ function cleanup(code) {
 }
 
 function outputCard(deck, match) {
+
+    if (match && options.match === 'hidden') return
+
     var order = deck.deck[deck.cardIndex][0]
     var num = deck.deck[deck.cardIndex][1]
     var dbfId = order2id[order]
@@ -65,11 +69,17 @@ function outputCard(deck, match) {
     } else {
         cardEl.append($('<div class="num">' + num + '</div>'))
     }
-    deck.element.append(cardEl)
+
+    var target =
+        (match && options.match === 'separate') ?
+        deck.element.children('.top') :
+        deck.element.children('.bottom')
+    target.append(cardEl)
 }
 
 function outputEmpty(deck) {
-    deck.element.append($('<div class="card empty"></div>'))
+    if (options.diff === 'collapsed') return
+    deck.element.children('.bottom').append($('<div class="card empty"></div>'))
 }
 
 function addCode(code) {
@@ -179,6 +189,9 @@ function diff() {
         subheader.append($(`<span class="dust">${info.dust}<i class="fas fa-flask" title="Dust"></i></span>`))
         el.append(subheader)
 
+        el.append($('<div class="top"></div>'))
+        el.append($('<div class="bottom"></div>'))
+
         el.insertBefore(placeholder)
 
         var mappedDeck = _.map(rawDeck.cards, function(card) {
@@ -271,10 +284,24 @@ $(function(){
         $('#scrape').on('click', function(){ addDeckFromPage() })
         $('#enter').on('click', function(){ addDeckManually() })
 
-        // load the decks from last time 
-        chrome.storage.sync.get('codes', function(data) {
-            codes = data.codes || []
-            diff()
+        // load options
+        $.getJSON( chrome.extension.getURL('options.json'), function(json) {
+            defaults = json
+            chrome.storage.sync.get(defaults, function(data) {
+                options = data
+                codes = data.codes
+
+                // set transparency css rule
+                $('<style>')
+                    .prop('type', 'text/css')
+                    .html(`
+                        .card.match {
+                            opacity: ${options.transparency / 100};
+                        }
+                    `).appendTo('head')
+
+                diff()
+            })
         })
     })
 
@@ -335,8 +362,9 @@ $(function(){
         diff()
     })
 
-    $('#issues').on('click', function() {
-        chrome.tabs.create({'url': 'http://github.com/mrzealot/deckdiff/issues'})
+    $('#options').on('click', function() {
+        var suffix = (window.location.href.indexOf('maximized') !== -1) ? '?maximized' : ''
+        window.location.href = chrome.extension.getURL('options.html') + suffix
     })
 
     $('#info').on('click', function() {

@@ -13,6 +13,7 @@
   "browser_action": {
     "default_popup": "ui.html"
   },
+  "options_page": "options.html?maximized",
   "permissions": [
     "clipboardRead",
     "clipboardWrite",
@@ -26,5 +27,5 @@
       "id": "deckdiff@zealot.hu"
     }
   },
-  "content_security_policy": "script-src 'self' https://cdnjs.cloudflare.com https://use.fontawesome.com https://unpkg.com; object-src 'self'"
+  "content_security_policy": "script-src 'self' https://cdnjs.cloudflare.com https://use.fontawesome.com https://unpkg.com https://maxcdn.bootstrapcdn.com https://code.jquery.com; object-src 'self'"
 }

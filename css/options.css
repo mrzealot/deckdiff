@@ -1,0 +1,93 @@
+body {
+    background-color: #f3eddd;
+}
+
+#options {
+    padding: 10px;
+    margin: 0 auto;
+    width: 420px;
+    position: relative;
+}
+
+#options .btn.btn-secondary.active {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+#options .btn.btn-secondary.active:hover {
+    background-color: #0062cc;
+    border-color: #005cbf;
+}
+
+h1 {
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+#back {
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    font-size: 24px;
+    text-align: center;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+}
+
+#back:hover {
+    color: white;
+    background-color: #c9302c;
+}
+
+.row {
+    margin: 0 0 10px 0;
+}
+
+.row span {
+    font-size: 18px;
+    display: inline-block;
+    margin-right: 10px;
+    line-height: 38px;
+    width: 150px;
+}
+
+label:focus, label.active.focus {
+    box-shadow: none !important;
+}
+
+#slider {
+    width: 180px;
+    height: 12px;
+    margin: 12px 24px;
+}
+
+#custom-handle {
+    width: 50px;
+    height: 24px;
+    line-height: 24px;
+    top: 50%;
+    margin-top: -12px;
+    text-align: center;
+    margin-left: -25px;
+}
+
+#custom-handle:not(.ui-state-active) {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+#custom-handle:not(.ui-state-active):hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+#custom-handle.ui-state-active {
+    border-color: #007fff;
+}
+
+#custom-handle:focus {
+    outline: none;
+}

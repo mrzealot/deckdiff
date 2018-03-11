@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>DeckDIFF Options</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="css/options.css">
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.5/lodash.min.js"></script>
+        <script type="text/javascript" src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        <script type="text/javascript" src="js/options.js"></script>
+    </head>
+
+    <body>
+        <div id="options" class="container">
+            <h1>DeckDIFF Options</h1>
+
+            <div id="back">
+                <i class="fas fa-angle-double-left"></i>
+            </div>
+
+            <div class="row">
+                <span title="How to display matching cards?">Matching cards:</span>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active" title="Inline, mixed with the differences...">
+                        <input type="radio" name="options-match" data-key="match" data-value="inline" id="match-inline" autocomplete="off" checked> Inline
+                    </label>
+                    <label class="btn btn-secondary" title="Separately, at the top...">
+                        <input type="radio" name="options-match" data-key="match" data-value="separate" id="match-separate" autocomplete="off"> Separate
+                    </label>
+                    <label class="btn btn-secondary" title="Hide matching cards...">
+                        <input type="radio" name="options-match" data-key="match" data-value="hidden" id="match-hidden" autocomplete="off"> Hidden
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <span title="How transparent shoud matching cards be?">Transparency:</span>
+                <div id="slider">
+                    <div id="custom-handle" class="ui-slider-handle"></div>
+                </div>
+            </div>
+
+            <div class="row">
+                <span title="How to display card differences?">Different cards:</span>
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active" title="Leave empty spaces to align the same cards on the same row...">
+                        <input type="radio" name="options-diff" data-key="diff" data-value="expanded" id="diff-expanded" autocomplete="off" checked> Expanded
+                    </label>
+                    <label class="btn btn-secondary" title="Collapse empty spaces and just list the cards in order...">
+                        <input type="radio" name="options-diff" data-key="diff" data-value="collapsed" id="diff-collapsed" autocomplete="off"> Collapsed
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <span>Report an Issue:</span>
+                <a role="button" class="btn btn-warning" href="http://github.com/mrzealot/deckdiff/issues" target="_blank">GitHub Issue Tracker</a>
+            </div>
+        </div>
+    </body>
+</html>

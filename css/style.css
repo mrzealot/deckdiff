@@ -41,12 +41,7 @@ header {
     background-color: #c9302c;
 }
 
-#issues:hover {
-    color: white;
-    background-color: #ec971f;
-}
-
-#info:hover, #maximize:hover {
+#info:hover, #options:hover, #maximize:hover {
     color: white;
     background-color: #0275d8;
 }
