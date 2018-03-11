@@ -49,9 +49,29 @@ Once decks are loaded, cards are displayed in cost/name order side-by-side and t
 The plugin remembers your decks but you can manually remove them either one at a time (using the X icon in the top right corner of the deck's header) or all at once (using the clear button in the top right corner of the whole plugin window).
 The other "header icons" (continuing from right to left) are:
 
-- flag: bring you to this repo's issue page,
+- cog: bring up the options page (see below),
 - lightbulb: show this readme, and
 - maximize: open the plugin in a separate new tab for more screen real estate.
+
+## Options
+
+### Matching cards
+
+For matching cards, you can set the comparison behaviour to one of three options:
+
+- Display the cards **inline**, just like the differences (only affected by the transparency) [default]
+- Display the cards **separate**ly at the top
+- Matching cards should be **hidden** altogether
+
+Additionally, you can set how transparent the matches should look with the **Transparency** slider.
+(Higher values mean greater transparency, so you'll see it less)
+
+### Differing cards
+
+As for the differences, you can set how the layout should work:
+
+- The **expanded** layout inserts empty spaces between cards to correctly line up the same cards on the same row [default], while
+- The **collapsed** layout omits these spaces for a more compact view.
 
 ## Issues
 

@@ -1,7 +1,7 @@
 {
   "name": "DeckDIFF",
   "short_name": "DeckDIFF",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "description": "Diffing for Hearthstone decks",
   "icons": {
     "128": "img/icon.png"
