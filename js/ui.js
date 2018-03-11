@@ -129,7 +129,7 @@ function addDeckManually() {
 }
 
 function deckInfo(rawDeck) {
-    var klass = _.capitalize(HSDB[rawDeck.heroes[0]].playerClass)
+    var klass = _.capitalize(HSDB[rawDeck.heroes[0]].cardClass)
     var format = rawDeck.format === 1 ? 'Wild' : 'Standard'
     var formatAbbr = rawDeck.format === 1 ? 'Wld' : 'Std'
     var dust = 0
