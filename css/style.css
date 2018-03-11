@@ -361,8 +361,9 @@ header {
     text-align: center;
 }
 
-.swal-content input {
+.swal-content input, .swal-content textarea {
     width: 100%;
+    white-space: pre-wrap;
 }
 
 .fa-heart {

@@ -131,11 +131,18 @@ function addDeckFromPage() {
 }
 
 function addDeckManually() {
+
+    // custom input that is prepopulated with the current deck name
+    $input = $('<textarea autofocus>')
+    $input.on('change', function() {
+        swal.setActionValue($(this).val())
+    })
+
     ask('Here we go...', 'Please enter a deckcode:', function(value) {
         if (value) {
             addCode(value)
         }
-    })
+    }, $input)
 }
 
 function deckInfo(rawDeck) {
