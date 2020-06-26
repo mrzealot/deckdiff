@@ -250,6 +250,9 @@ header {
     vertical-align: middle;
     line-height: 20px;
 }
+.card:not(.empty) {
+    cursor: pointer;
+}
 
 .card.empty {
     background-color: transparent;
