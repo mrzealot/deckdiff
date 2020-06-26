@@ -249,6 +249,7 @@ header {
     position: relative;
     vertical-align: middle;
     line-height: 20px;
+    cursor: pointer;
 }
 
 .card.empty {

@@ -70,6 +70,10 @@ function outputCard(deck, match) {
         cardEl.append($('<div class="num">' + num + '</div>'))
     }
 
+    cardEl.on('click', function() {
+        window.open('https://hearthstone.gamepedia.com/'+card.name.replace(' ','_'),'_blank');
+    });
+
     var target =
         (match && options.match === 'separate') ?
         deck.element.children('.top') :
